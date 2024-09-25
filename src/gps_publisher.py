@@ -67,11 +67,16 @@ class GPSPublisher:
                                     on_message=self.on_message,
                                     on_error=self.on_error,
                                     on_close=self.on_close)
-        ws.run_forever()
+        self.ws.run_forever()
+
+    def shutdown(self):
+        if self.ws:
+            self.ws.close()
+        rospy.signal_shutdown("Shutting down due to interrupt")
 
 def signal_handler(sig, frame):
     rospy.loginfo('Ctrl+C pressed, shutting down...')
-    gps_pub.closed = True
+    gps_pub.shutdown()
     sys.exit(0)
 
 if __name__ == "__main__":
