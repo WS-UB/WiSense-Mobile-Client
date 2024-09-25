@@ -47,7 +47,7 @@ class GPSPublisher:
 
     def send_requests(self, ws):
         while not self.closed:
-            # rospy.loginfo("Sending getLastKnownLocation request")
+            rospy.loginfo("Sending getLastKnownLocation request")
             ws.send("getLastKnownLocation")
             sleep(1)  # 1 second sleep
         rospy.loginfo("Stopping request thread")
@@ -62,7 +62,7 @@ class GPSPublisher:
         self.gps_pub.publish(gps_msg)
 
     def connect(self):
-        ws = websocket.WebSocketApp(self.url,
+        ws = websocket.WebSocketApp(f"{self.url}/gps",
                                     on_open=self.on_open,
                                     on_message=self.on_message,
                                     on_error=self.on_error,
