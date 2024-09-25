@@ -62,7 +62,7 @@ class GPSPublisher:
         self.gps_pub.publish(gps_msg)
 
     def connect(self):
-        ws = websocket.WebSocketApp(f"{self.url}/gps",
+        self.ws = websocket.WebSocketApp(f"{self.url}/gps",
                                     on_open=self.on_open,
                                     on_message=self.on_message,
                                     on_error=self.on_error,
